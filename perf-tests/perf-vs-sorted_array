@@ -17,5 +17,5 @@ end
 
 measure 'sorted_array',
   SortedArray::SortedArray.new(SortedArray::DefaultSorter.new(:to_i))
-measure 'sorted-array', Array::Sorted.new
+measure 'array-sorted', Array::Sorted.new
 measure 'sorted_array_binary', SortedArrayBinary.new
