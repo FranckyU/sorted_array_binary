@@ -49,7 +49,7 @@ describe SortedArrayBinary do
       expect { @ar.fill nil }.to raise_error NotImplementedError
     end
 
-    [:flatten, :flatten!, :insert, :map!, :collect!, :reverse!, :rotate!,
+    [:flatten!, :insert, :map!, :collect!, :reverse!, :rotate!,
       :shuffle!, :unshift].
     each { |m|
       it "##{m}" do

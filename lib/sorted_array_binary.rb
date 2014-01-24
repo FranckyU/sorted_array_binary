@@ -32,7 +32,7 @@ class SortedArrayBinary < Array
   end
 
   # Not implemented methods.
-  [:[]=, :collect!, :fill, :flatten, :flatten!, :insert, :map!, :reverse!,
+  [:[]=, :collect!, :fill, :flatten!, :insert, :map!, :reverse!,
     :rotate!, :shuffle!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
