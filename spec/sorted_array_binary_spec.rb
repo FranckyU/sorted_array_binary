@@ -138,6 +138,13 @@ describe SortedArrayBinary do
 	@ar._find_insert_position('a').should == 0
       end
     end
+
+    context 'and array context 4 elements,' do
+      it 'returns 1 if passed element is greater than 1st element' do
+	@ar.push 'a', 'c', 'd'
+	@ar._find_insert_position('b').should == 1
+      end
+    end
   end
 
   # {{{2 #_middle_element_index
