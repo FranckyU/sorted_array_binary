@@ -1,4 +1,5 @@
 require 'rspec'
+require 'spec_helper'
 require 'sorted_array_binary'
 
 describe SortedArrayBinary do
