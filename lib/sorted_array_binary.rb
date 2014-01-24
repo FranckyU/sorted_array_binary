@@ -33,7 +33,7 @@ class SortedArrayBinary < Array
 
   # Not implemented methods.
   [:[]=, :collect!, :fill, :flatten, :flatten!, :insert, :map!, :reverse!,
-    :rotate!, :shuffle!].
+    :rotate!, :shuffle!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
   }
@@ -45,7 +45,6 @@ class SortedArrayBinary < Array
   def push *objs
     _add *objs
   end
-  alias :unshift :push
   alias :<< :push
 
   def replace other_ary

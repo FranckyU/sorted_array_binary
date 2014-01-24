@@ -54,13 +54,14 @@ describe SortedArrayBinary do
       expect { @ar.flatten! }.to raise_error NotImplementedError
     end
 
-    it '#insert, #map!, #collect!, #reverse!, #rotate!, #shuffle!' do
+    it '#insert, #map!, #collect!, #reverse!, #rotate!, #shuffle!, #unshift' do
       expect { @ar.insert }.to raise_error NotImplementedError
       expect { @ar.map! }.to raise_error NotImplementedError
       expect { @ar.collect! }.to raise_error NotImplementedError
       expect { @ar.reverse! }.to raise_error NotImplementedError
       expect { @ar.rotate! }.to raise_error NotImplementedError
       expect { @ar.shuffle! }.to raise_error NotImplementedError
+      expect { @ar.unshift }.to raise_error NotImplementedError
     end
   end
 
@@ -72,7 +73,7 @@ describe SortedArrayBinary do
   end
 
   # {{{2 #push
-  [:<<, :push, :unshift].each { |method|
+  [:<<, :push].each { |method|
     context "##{method}" do
       it 'adds an element to array' do
 	@ar.send method, 'a'
