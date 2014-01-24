@@ -7,6 +7,17 @@ sorted_array_binary
 
 A sorted array using binary search
 
+## Why
+
+1. Neither of the existing sorted arrays gems use binary search (i.e. slow or
+   very slow).
+2. I don't like their source code, so I decided to roll my own, instead of
+   contributing.
+
+Existing sorted array gems as of Jan 2014:
+* sorted_array (0.0.5)
+* array-sorted (1.1.2)
+
 ## Performance
 
 When #push'ing 1000 random numbers into an array:
