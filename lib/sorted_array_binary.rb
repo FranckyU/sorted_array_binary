@@ -32,15 +32,11 @@ class SortedArrayBinary < Array
   end
 
   # Not implemented methods.
-  alias :[]= :_not_implemented
-  alias :collect! :_not_implemented
-  alias :fill :_not_implemented
-  alias :flatten :_not_implemented
-  alias :flatten! :_not_implemented
-  alias :map! :_not_implemented
-  alias :reverse! :_not_implemented
-  alias :rotate! :_not_implemented
-  alias :shuffle! :_not_implemented
+  [:[]=, :collect!, :fill, :flatten, :flatten!, :map!, :reverse!, :rotate!,
+    :shuffle!].
+  each { |m|
+    alias_method m, :_not_implemented
+  }
 
   def concat other_ary
     _add *other_ary
