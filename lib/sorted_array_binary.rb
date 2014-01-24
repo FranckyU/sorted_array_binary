@@ -32,18 +32,14 @@ class SortedArrayBinary < Array
   end
 
   # Not implemented methods.
-  [:[]=, :collect!, :fill, :flatten, :flatten!, :map!, :reverse!, :rotate!,
-    :shuffle!].
+  [:[]=, :collect!, :fill, :flatten, :flatten!, :insert, :map!, :reverse!,
+    :rotate!, :shuffle!].
   each { |m|
     alias_method m, :_not_implemented
   }
 
   def concat other_ary
     _add *other_ary
-  end
-
-  def insert index, *objs
-    _add *objs
   end
 
   def push *objs

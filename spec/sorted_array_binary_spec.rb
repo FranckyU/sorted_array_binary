@@ -54,7 +54,8 @@ describe SortedArrayBinary do
       expect { @ar.flatten! }.to raise_error NotImplementedError
     end
 
-    it '#map!, #collect!, #reverse!, #rotate!, #shuffle!' do
+    it '#insert, #map!, #collect!, #reverse!, #rotate!, #shuffle!' do
+      expect { @ar.insert }.to raise_error NotImplementedError
       expect { @ar.map! }.to raise_error NotImplementedError
       expect { @ar.collect! }.to raise_error NotImplementedError
       expect { @ar.reverse! }.to raise_error NotImplementedError
@@ -68,25 +69,6 @@ describe SortedArrayBinary do
     @ar.push 'c'
     @ar.concat ['a', 'b']
     @ar.should == ['a', 'b', 'c']
-  end
-
-  # {{{2 #insert
-  context '#insert' do
-    it 'adds an element to array' do
-      @ar.insert 0, 'a'
-      @ar.should == ['a']
-    end
-
-    it 'adds 2 elements to array' do
-      @ar.insert 0, 'a'
-      @ar.insert 0, 'b'
-      @ar.should == ['a', 'b']
-    end
-
-    it 'adds elements in random order, but the result is sorted' do
-      @ar.insert 0, 'b', 'a', 'd', 'c'
-      @ar.should == ['a', 'b', 'c', 'd']
-    end
   end
 
   # {{{2 #push
