@@ -1,0 +1,18 @@
+#!/usr/bin/ruby
+
+require './common'
+require '../lib/sorted_array_binary'
+
+sec = MonotonicTime.measure { @ar.sort }
+say 'sorting', sec
+
+sec = MonotonicTime.measure {
+  sa = SortedArrayBinary.new
+  sa.push *@ar
+}
+say 'pushing into SortedArray', sec
+
+sec = MonotonicTime.measure {
+  SortedArrayBinary.new @ar
+}
+say 'SortedArray.new', sec

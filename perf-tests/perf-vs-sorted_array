@@ -1,0 +1,21 @@
+#!/usr/bin/ruby
+
+require 'frugal_timeout'
+require 'sorted_array'
+require 'array-sorted'
+require './common'
+require '../lib/sorted_array_binary'
+
+def measure sorted_array_name, sorted_array_instance
+  sec = MonotonicTime.measure {
+    @ar.each { |el|
+      sorted_array_instance.push el
+    }
+  }
+  say "#{sorted_array_name}#push", sec
+end
+
+measure 'sorted_array',
+  SortedArray::SortedArray.new(SortedArray::DefaultSorter.new(:to_i))
+measure 'sorted-array', Array::Sorted.new
+measure 'sorted_array_binary', SortedArrayBinary.new
