@@ -1,6 +1,10 @@
 sorted_array_binary
 ===================
 
+[![Build Status](https://travis-ci.org/ledestin/sorted_array_binary.png)](https://travis-ci.org/ledestin/sorted_array_binary)
+[![Coverage Status] (https://coveralls.io/repos/ledestin/sorted_array_binary/badge.png)] (https://coveralls.io/r/ledestin/sorted_array_binary)
+[![Code Climate](https://codeclimate.com/github/ledestin/sorted_array_binary.png)](https://codeclimate.com/github/ledestin/sorted_array_binary)
+
 A sorted array using binary search
 
 ## Performance
