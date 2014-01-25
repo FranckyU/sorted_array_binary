@@ -50,13 +50,34 @@ describe SortedArrayBinary do
       expect { @ar.fill nil }.to raise_error NotImplementedError
     end
 
-    [:flatten!, :insert, :map!, :collect!, :reverse!, :rotate!,
+    [:flatten!, :insert, :map!, :reverse!, :rotate!,
       :shuffle!, :unshift].
     each { |m|
       it "##{m}" do
 	expect { @ar.send m }.to raise_error NotImplementedError
       end
     }
+  end
+
+  # {{{2 #collect!
+  context '#collect!' do
+    it 'after it, array is sorted' do
+      @ar.push 'a', 'b', 'c'
+      @ar.collect! { |el|
+	case el
+	when 'a' then 9
+	when 'b' then 3
+	when 'c' then 1
+	end
+      }
+      @ar.should == [1, 3, 9]
+    end
+
+    it 'raises exception if one of resulting elements is nil' do
+      @ar.push 'a'
+      expect { @ar.collect! { nil } }.to raise_error ArgumentError
+      @ar.should == ['a']
+    end
   end
 
   # {{{2 #concat

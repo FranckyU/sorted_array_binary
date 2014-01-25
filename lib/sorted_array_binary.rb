@@ -25,6 +25,7 @@ class SortedArrayBinary < Array
     end
   end
 
+  alias :old_collect! :collect!
   alias :old_insert :insert
 
   def _not_implemented *args
@@ -32,11 +33,17 @@ class SortedArrayBinary < Array
   end
 
   # Not implemented methods.
-  [:[]=, :collect!, :fill, :flatten!, :insert, :map!, :reverse!,
+  [:[]=, :fill, :flatten!, :insert, :map!, :reverse!,
     :rotate!, :shuffle!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
   }
+
+  def collect! &b
+    ar = clone.old_collect! &b
+    self.class._check_for_nil *ar
+    replace ar
+  end
 
   def concat other_ary
     _add *other_ary
