@@ -33,8 +33,7 @@ class SortedArrayBinary < Array
   end
 
   # Not implemented methods.
-  [:[]=, :fill, :flatten!, :insert, :map!, :reverse!,
-    :rotate!, :shuffle!, :unshift].
+  [:[]=, :fill, :flatten!, :insert, :reverse!, :rotate!, :shuffle!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
   }
@@ -44,6 +43,7 @@ class SortedArrayBinary < Array
     self.class._check_for_nil *ar
     replace ar
   end
+  alias :map! :collect!
 
   def concat other_ary
     _add *other_ary
