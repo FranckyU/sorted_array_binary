@@ -38,6 +38,8 @@ class SortedArrayBinary < Array
     alias_method m, :_not_implemented
   }
 
+  # If the resulting array contains nil, throw an exception. This operation is
+  # atomic, i.e. the array won't be mutated in case of exception.
   def collect! &b
     ar = clone.old_collect! &b
     self.class._check_for_nil *ar
