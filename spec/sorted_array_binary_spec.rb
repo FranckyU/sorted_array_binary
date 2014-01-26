@@ -50,7 +50,7 @@ describe SortedArrayBinary do
       expect { @ar.fill nil }.to raise_error NotImplementedError
     end
 
-    [:flatten!, :insert, :reverse!, :rotate!, :shuffle!, :unshift].
+    [:insert, :reverse!, :rotate!, :shuffle!, :unshift].
     each { |m|
       it "##{m}" do
 	expect { @ar.send m }.to raise_error NotImplementedError
@@ -86,6 +86,21 @@ describe SortedArrayBinary do
     @ar.push 'c'
     @ar.concat ['a', 'b']
     @ar.should == ['a', 'b', 'c']
+  end
+
+  # {{{2 #flatten!
+  context '#flatten!' do
+    it 'flattens array' do
+      @ar.push [1, 2], [4, 3]
+      @ar.flatten!
+      @ar.should == [1, 2, 3, 4]
+    end
+
+    it 'raises exception if resulting array contains nil' do
+      @ar.push [nil, 1]
+      expect { @ar.flatten! }.to raise_error ArgumentError
+      @ar.should == [[nil, 1]]
+    end
   end
 
   # {{{2 #push
