@@ -25,7 +25,6 @@ class SortedArrayBinary < Array
     end
   end
 
-  alias :old_collect! :collect!
   alias :old_insert :insert
 
   def _not_implemented *args
@@ -41,7 +40,7 @@ class SortedArrayBinary < Array
   # If the resulting array contains nil, throw an exception. This operation is
   # atomic, i.e. the array won't be mutated in case of exception.
   def collect! &b
-    ar = clone.old_collect! &b
+    ar = collect &b
     self.class._check_for_nil *ar
     replace ar
   end
