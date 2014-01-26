@@ -5,6 +5,14 @@ class SortedArrayBinary < Array
     raise ArgumentError, "nil can't be sorted" if objs.include?(nil)
   end
 
+  def self._equal? comparison_state
+    comparison_state == 0
+  end
+
+  def self._less? comparison_state
+    comparison_state == -1
+  end
+
   def self.new *args, &b
     return super *args if args.size == 0 || args.size == 2
       
@@ -85,11 +93,13 @@ class SortedArrayBinary < Array
       middle_el = self[middle_idx]
       after_middle_idx = middle_idx + 1
 
+      comparison_state = arg <=> middle_el
+
       # 1. Equals to the middle element. Insert after el.
-      return after_middle_idx if arg == middle_el
+      return after_middle_idx if self.class._equal?(comparison_state)
 
       # 2. Less than the middle element.
-      if arg < middle_el
+      if self.class._less?(comparison_state)
 	# There's nothing to the left. So insert it as the first element.
 	return 0 if _left_boundary? middle_idx
 

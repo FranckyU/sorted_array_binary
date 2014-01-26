@@ -121,6 +121,18 @@ describe SortedArrayBinary do
     @ar.should == ['b', 'c']
   end
 
+  # {{{2 #_equal?
+  context '#equal?' do
+    it 'returns true if argument is 0' do
+      SortedArrayBinary._equal?(0).should be_true
+    end
+
+    it 'returns false if argument != 0' do
+      SortedArrayBinary._equal?(1).should be_false
+      SortedArrayBinary._equal?(-1).should be_false
+    end
+  end
+
   # {{{2 #_find_insert_position
   context '#_find_insert_position' do
     it 'returns 0 if array is empty' do
@@ -166,6 +178,18 @@ describe SortedArrayBinary do
 	@ar.push 'a', 'c', 'd'
 	@ar._find_insert_position('b').should == 1
       end
+    end
+  end
+
+  # {{{2 #_less?
+  context '#less?' do
+    it 'returns true if argument is -1' do
+      SortedArrayBinary._less?(-1).should be_true
+    end
+
+    it 'returns false if argument != -1' do
+      SortedArrayBinary._less?(0).should be_false
+      SortedArrayBinary._less?(1).should be_false
     end
   end
 
