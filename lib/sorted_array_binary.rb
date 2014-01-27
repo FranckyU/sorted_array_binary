@@ -20,7 +20,7 @@ class SortedArrayBinary < Array
     if args.first.respond_to? :each
       _check_for_nil args.first
       ar = super *args
-      ar.sort!
+      ar.old_sort!
       return ar
     end
 
@@ -28,12 +28,13 @@ class SortedArrayBinary < Array
     if block_given?
       ar = super *args, b
       _check_for_nil *ar
-      ar.sort!
+      ar.old_sort!
       return ar
     end
   end
 
   alias :old_insert :insert
+  alias :old_sort! :sort!
 
   def _not_implemented *args
     raise NotImplementedError
@@ -44,7 +45,7 @@ class SortedArrayBinary < Array
   # The following methods are not implemented mostly because they change order
   # of elements. The rest ([]= and fill) arguably aren't useful on a sorted
   # array.
-  [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!, :unshift].
+  [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!, :sort!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
   }
@@ -75,7 +76,7 @@ class SortedArrayBinary < Array
 
   def replace other_ary
     super
-    sort!
+    old_sort!
     self
   end
 
