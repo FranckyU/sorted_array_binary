@@ -9,8 +9,10 @@ class SortedArrayBinary < Array
   def self.new *args, &b
     case args.size
     when 0
+      # Passed sort block.
       return super &b
     when 2
+      # Passed size, obj.
       return super *args
     end
       
