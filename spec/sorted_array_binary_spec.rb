@@ -29,9 +29,15 @@ describe SortedArrayBinary do
       @ar.should == ['a']*5
     end
 
-    it 'if passed array, sorts it' do
-      @ar = SortedArrayBinary.new ['b', 'a']
-      @ar.should == ['a', 'b']
+    context 'if passed array,' do
+      it 'sorts it' do
+	@ar = SortedArrayBinary.new ['b', 'a']
+	@ar.should == ['a', 'b']
+      end
+
+      it 'raises exception if nil found in passed array' do
+	expect { SortedArrayBinary.new [nil] }.to raise_error ArgumentError
+      end
     end
 
     it 'if passed size and block, fills it and sorts it' do

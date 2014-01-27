@@ -16,7 +16,7 @@ class SortedArrayBinary < Array
       
     # Passed array.
     if args.first.respond_to? :each
-      _check_for_nil args.first
+      _check_for_nil *args.first
       ar = super *args
       ar.old_sort!
       return ar
