@@ -38,6 +38,12 @@ describe SortedArrayBinary do
       @ar = SortedArrayBinary.new(5) { |i| i == 0 ? 10 : i }
       @ar.should == [1, 2, 3, 4, 10]
     end
+
+    it 'if passed sorting block, resulting array is sorted using it' do
+      @ar = SortedArrayBinary.new { |a, b| b <=> a }
+      @ar.push 'a', 'b'
+      @ar.should == ['b', 'a']
+    end
   end
 
   # {{{2 Not implemented
@@ -123,6 +129,13 @@ describe SortedArrayBinary do
 	@ar.should == ['a', 'b', 'c', 'd', 'e']
       end
 
+      it 'adds element in random order, but sorting is done via sort block' do
+	@ar = SortedArrayBinary.new { |a, b| b <=> a }
+	@ar.push 'c', 'd'
+	@ar.push 'a', 'b'
+	@ar.should == ['d', 'c', 'b', 'a']
+      end
+
       it 'raises exception if nil is passed' do
 	expect { @ar.send method, nil }.to raise_error ArgumentError
       end
@@ -136,15 +149,45 @@ describe SortedArrayBinary do
     @ar.should == ['b', 'c']
   end
 
-  # {{{2 #_equal?
-  context '#equal?' do
-    it 'returns true if argument is 0' do
-      SortedArrayBinary._equal?(0).should be_true
+  # {{{2 #_compare
+  context '#_compare' do
+    context 'sort block not given' do
+      it 'returns :equal if arguments are equal' do
+	@ar._compare(1, 1).should == :equal
+      end
+
+      it 'returns :less if arg1 < arg2' do
+	@ar._compare(1, 2).should == :less
+      end
+
+      it 'returns :greater if arg1 > arg2' do
+	@ar._compare(2, 1).should == :greater
+      end
     end
 
-    it 'returns false if argument != 0' do
-      SortedArrayBinary._equal?(1).should be_false
-      SortedArrayBinary._equal?(-1).should be_false
+    context 'sort block given' do
+      before :each do
+	@ar = SortedArrayBinary.new { |a, b| b <=> a }
+      end
+
+      it 'returns :equal if arguments are equal' do
+	@ar._compare(1, 1).should == :equal
+      end
+
+      it 'returns :less if arg1 < arg2' do
+	@ar._compare(2, 1).should == :less
+      end
+
+      it 'returns :greater if arg1 > arg2' do
+	@ar._compare(1, 2).should == :greater
+      end
+
+      it 'raises exception if block returns value outside of -1, 0, 1' do
+	@ar = SortedArrayBinary.new { 'a' }
+	expect {
+	  @ar.push 1, 2
+	}.to raise_error SortedArrayBinary::InvalidSortBlock
+      end
     end
   end
 
@@ -193,18 +236,6 @@ describe SortedArrayBinary do
 	@ar.push 'a', 'c', 'd'
 	@ar._find_insert_position('b').should == 1
       end
-    end
-  end
-
-  # {{{2 #_less?
-  context '#less?' do
-    it 'returns true if argument is -1' do
-      SortedArrayBinary._less?(-1).should be_true
-    end
-
-    it 'returns false if argument != -1' do
-      SortedArrayBinary._less?(0).should be_false
-      SortedArrayBinary._less?(1).should be_false
     end
   end
 

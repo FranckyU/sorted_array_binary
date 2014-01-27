@@ -1,20 +1,18 @@
 class SortedArrayBinary < Array
   class BoundaryError < RuntimeError; end
+  class InvalidSortBlock < RuntimeError; end
 
   def self._check_for_nil *objs
     raise ArgumentError, "nil can't be sorted" if objs.include?(nil)
   end
 
-  def self._equal? comparison_state
-    comparison_state == 0
-  end
-
-  def self._less? comparison_state
-    comparison_state == -1
-  end
-
   def self.new *args, &b
-    return super *args if args.size == 0 || args.size == 2
+    case args.size
+    when 0
+      return super &b
+    when 2
+      return super *args
+    end
       
     # Passed array.
     if args.first.respond_to? :each
@@ -36,6 +34,16 @@ class SortedArrayBinary < Array
   alias :old_insert :insert
   private :old_insert
   alias :old_sort! :sort!
+
+  def initialize *args, &b
+    if args.size == 0 && block_given?
+      @sort_block = b
+      super()
+      return
+    end
+
+    super
+  end
 
   def _not_implemented *args
     raise NotImplementedError
@@ -95,6 +103,19 @@ class SortedArrayBinary < Array
     raise BoundaryError, 'no boundary? on empty array' if empty?
   end
 
+  def _compare a, b
+    case state = @sort_block ? @sort_block.call(a, b) : a <=> b
+    when -1
+      :less
+    when 0
+      :equal
+    when 1
+      :greater
+    else
+      raise InvalidSortBlock, "sort block returned invalid value: #{state}"
+    end
+  end
+
   def _find_insert_position arg
     return 0 if empty?
 
@@ -105,13 +126,13 @@ class SortedArrayBinary < Array
       middle_el = self[middle_idx]
       after_middle_idx = middle_idx + 1
 
-      comparison_state = arg <=> middle_el
+      comparison_state = _compare(arg, middle_el)
 
       # 1. Equals to the middle element. Insert after el.
-      return after_middle_idx if self.class._equal?(comparison_state)
+      return after_middle_idx if comparison_state == :equal
 
       # 2. Less than the middle element.
-      if self.class._less?(comparison_state)
+      if comparison_state == :less
 	# There's nothing to the left. So insert it as the first element.
 	return 0 if _left_boundary? middle_idx
 
@@ -126,7 +147,8 @@ class SortedArrayBinary < Array
 
       # Less than after middle element? Put it right before it!
       after_middle_el = self[after_middle_idx]
-      return after_middle_idx if arg <= after_middle_el
+      ret = _compare(arg, after_middle_el)
+      return after_middle_idx if ret == :equal || ret == :less
 
       # Proceeed to divide the right part.
       start = after_middle_idx
