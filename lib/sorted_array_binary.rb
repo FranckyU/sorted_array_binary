@@ -34,6 +34,7 @@ class SortedArrayBinary < Array
   end
 
   alias :old_insert :insert
+  private :old_insert
   alias :old_sort! :sort!
 
   def _not_implemented *args
