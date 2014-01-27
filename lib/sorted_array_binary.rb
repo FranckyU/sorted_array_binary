@@ -14,22 +14,26 @@ class SortedArrayBinary < Array
     when 2
       # Passed size, obj.
       return super *args
-    end
-      
-    # Passed array.
-    if args.first.respond_to? :each
-      _check_for_nil *args.first
-      ar = super *args
-      ar.old_sort!
-      return ar
-    end
+    when 1
+      # Passed array.
+      if args.first.respond_to? :each
+	_check_for_nil *args.first
+	ar = super *args
+	ar.old_sort!
+	return ar
+      end
 
-    # Passed size and block.
-    if block_given?
-      ar = super *args, b
-      _check_for_nil *ar
-      ar.old_sort!
-      return ar
+      # Passed size and block.
+      if block_given?
+	ar = super *args, b
+	_check_for_nil *ar
+	ar.old_sort!
+	return ar
+      end
+
+      # Passed size, but not obj, which means fill with nils.
+      raise ArgumentError, "can't fill array with nils" \
+	if args.first.is_a? Numeric
     end
   end
 

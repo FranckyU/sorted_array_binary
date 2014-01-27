@@ -29,6 +29,10 @@ describe SortedArrayBinary do
       @ar.should == ['a']*5
     end
 
+    it 'if passed just size, raises exception' do
+      expect { SortedArrayBinary.new 5 }.to raise_error ArgumentError
+    end
+
     context 'if passed array,' do
       it 'sorts it' do
 	@ar = SortedArrayBinary.new ['b', 'a']
