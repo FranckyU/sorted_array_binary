@@ -33,6 +33,10 @@ describe SortedArrayBinary do
       expect { SortedArrayBinary.new 5 }.to raise_error ArgumentError
     end
 
+    it 'if passed single non-numeric argument, calls Array#new' do
+      expect { SortedArrayBinary.new 'a' }.to raise_error TypeError
+    end
+
     context 'if passed array,' do
       it 'sorts it' do
 	@ar = SortedArrayBinary.new ['b', 'a']

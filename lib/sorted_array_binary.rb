@@ -35,6 +35,8 @@ class SortedArrayBinary < Array
       raise ArgumentError, "can't fill array with nils" \
 	if args.first.is_a? Numeric
     end
+
+    super *args, &b
   end
 
   alias :old_insert :insert
