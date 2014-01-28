@@ -28,6 +28,8 @@ class SortedArrayBinary < Array
   private :old_sort!
 
   def initialize *args, &b
+    @sort_block = proc { |a, b| a <=> b }
+
     # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
@@ -131,8 +133,7 @@ class SortedArrayBinary < Array
   end
 
   def _compare a, b #:nodoc:
-    state = ELEMENT_COMPARE_STATES[@sort_block ?
-      @sort_block.call(a, b) : a <=> b]
+    state = ELEMENT_COMPARE_STATES[@sort_block.call(a, b)]
     raise InvalidSortBlock,
       "sort block returned invalid value: #{state.inspect}" unless state
     state
