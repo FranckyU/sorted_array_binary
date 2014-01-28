@@ -1,8 +1,10 @@
 class SortedArrayBinary < Array
-  class BoundaryError < RuntimeError; end
-  class InvalidSortBlock < RuntimeError; end
+  class BoundaryError < RuntimeError #:nodoc:
+  end
+  class InvalidSortBlock < RuntimeError #:nodoc:
+  end
 
-  def self._check_for_nil *objs
+  def self._check_for_nil *objs #:nodoc:
     raise ArgumentError, "nil can't be sorted" if objs.include?(nil)
   end
 
@@ -44,7 +46,7 @@ class SortedArrayBinary < Array
     super
   end
 
-  def _not_implemented *args
+  def _not_implemented *args #:nodoc:
     raise NotImplementedError
   end
 
@@ -90,7 +92,7 @@ class SortedArrayBinary < Array
 
   #private
 
-  def _add *objs
+  def _add *objs #:nodoc:
     self.class._check_for_nil *objs
     objs.each { |obj|
       old_insert _find_insert_position(obj), obj
@@ -98,11 +100,11 @@ class SortedArrayBinary < Array
     self
   end
 
-  def _check_can_calc_boundary?
+  def _check_can_calc_boundary? #:nodoc:
     raise BoundaryError, 'no boundary? on empty array' if empty?
   end
 
-  def _compare a, b
+  def _compare a, b #:nodoc:
     case state = @sort_block ? @sort_block.call(a, b) : a <=> b
     when -1
       :less
@@ -115,7 +117,7 @@ class SortedArrayBinary < Array
     end
   end
 
-  def _find_insert_position arg
+  def _find_insert_position arg #:nodoc:
     return 0 if empty?
 
     # At this point, there must be >1 elements in the array.
@@ -154,16 +156,16 @@ class SortedArrayBinary < Array
     }
   end
 
-  def _left_boundary? idx
+  def _left_boundary? idx #:nodoc:
     _check_can_calc_boundary?
     idx == 0
   end
 
-  def _middle_element_index start, ending
+  def _middle_element_index start, ending #:nodoc:
     start + (ending - start)/2
   end
 
-  def _right_boundary? idx
+  def _right_boundary? idx #:nodoc:
     _check_can_calc_boundary?
     idx == size - 1
   end
