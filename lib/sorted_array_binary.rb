@@ -178,7 +178,7 @@ class SortedArrayBinary < Array
 	# There's nothing to the left. So insert it as the first element.
 	return 0 if _left_boundary? middle_idx
 
-	end_idx = middle_idx
+	end_idx = middle_idx - 1
 	next
       end
 
