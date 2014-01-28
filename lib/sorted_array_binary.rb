@@ -142,9 +142,9 @@ class SortedArrayBinary < Array
   def _find_insert_position arg #:nodoc:
     return 0 if empty?
 
-    start_idx, ending_idx = 0, size - 1
+    start_idx, end_idx = 0, size - 1
     loop {
-      middle_idx = _middle_element_index(start_idx, ending_idx)
+      middle_idx = _middle_element_index(start_idx, end_idx)
       middle_el = self[middle_idx]
       after_middle_idx = middle_idx + 1
 
@@ -158,7 +158,7 @@ class SortedArrayBinary < Array
 	# There's nothing to the left. So insert it as the first element.
 	return 0 if _left_boundary? middle_idx
 
-	ending_idx = middle_idx
+	end_idx = middle_idx
 	next
       end
 
