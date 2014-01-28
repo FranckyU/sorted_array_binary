@@ -79,7 +79,6 @@ class SortedArrayBinary < Array
   # * The resulting array is sorted.
   def collect! &b
     ar = collect &b
-    self.class._check_for_nil *ar
     replace ar
   end
   alias :map! :collect!
@@ -96,7 +95,6 @@ class SortedArrayBinary < Array
   # * The resulting array is sorted.
   def flatten! *args
     ar = flatten *args
-    self.class._check_for_nil *ar
     replace ar
   end
 
