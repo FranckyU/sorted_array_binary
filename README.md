@@ -18,6 +18,20 @@ Existing sorted array gems as of Jan 2014:
 * sorted_array (0.0.5)
 * array-sorted (1.1.2)
 
+## Example
+
+```ruby
+require 'sorted_array_binary'
+
+# Use standard sorting via <=>.
+array = SortedArrayBinary.new
+array.push 'b', 'a' #=> ['a', 'b']
+
+# Use custom sorting block.
+array = SortedArrayBinary.new { |a, b| b <=> a }
+array.push 'a', 'b' #=> ['b', 'a']
+```
+
 ## Performance
 
 When #push'ing 1000 random numbers into an array:
