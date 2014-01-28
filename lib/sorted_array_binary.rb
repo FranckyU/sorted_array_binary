@@ -1,3 +1,5 @@
+# Copyright (C) 2014 by Dmitry Maksyoma <ledestin@gmail.com>
+
 # Automatically sorted array (by using binary search). Nils aren't allowed.
 # Methods that reorder elements are not implemented, as well as #[]= and #fill.
 #
