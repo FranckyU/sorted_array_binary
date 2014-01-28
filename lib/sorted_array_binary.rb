@@ -1,5 +1,5 @@
 class SortedArrayBinary < Array
-  COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
+  ELEMENT_COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
 
   class BoundaryError < RuntimeError #:nodoc:
   end
@@ -120,7 +120,8 @@ class SortedArrayBinary < Array
   end
 
   def _compare a, b #:nodoc:
-    state = COMPARE_STATES[@sort_block ? @sort_block.call(a, b) : a <=> b]
+    state = ELEMENT_COMPARE_STATES[@sort_block ?
+      @sort_block.call(a, b) : a <=> b]
     raise InvalidSortBlock,
       "sort block returned invalid value: #{state.inspect}" unless state
     state
