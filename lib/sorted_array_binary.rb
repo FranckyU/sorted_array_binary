@@ -1,4 +1,4 @@
-# Automatically sorted array (by using binary search).
+# Automatically sorted array (by using binary search). Nils aren't allowed.
 #
 # = Example
 #   require 'sorted_array_binary'
