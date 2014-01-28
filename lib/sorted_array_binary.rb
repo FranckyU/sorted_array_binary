@@ -36,7 +36,7 @@ class SortedArrayBinary < Array
     end
 
     if args.size == 1
-      # Passed array.
+      # Passed initial array.
       if args.first.respond_to? :each
 	self.class._check_for_nil *args.first
 	super *args
