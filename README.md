@@ -30,6 +30,9 @@ array.push 'b', 'a' #=> ['a', 'b']
 # Use custom sorting block.
 array = SortedArrayBinary.new { |a, b| b <=> a }
 array.push 'a', 'b' #=> ['b', 'a']
+
+# Nils not allowed.
+array.push nil #=> ArgumentError is raised
 ```
 
 ## Performance
