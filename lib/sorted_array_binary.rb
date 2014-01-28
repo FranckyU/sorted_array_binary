@@ -93,6 +93,9 @@ class SortedArrayBinary < Array
   end
   alias :<< :push
 
+  # Same as Array#replace, but:
+  # * Disallow nils in the passed.
+  # * The resulting array is sorted.
   def replace other_ary
     self.class._check_for_nil *other_ary
     super
