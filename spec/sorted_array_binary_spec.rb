@@ -173,15 +173,15 @@ describe SortedArrayBinary do
   context '#_compare' do
     context 'sort block not given' do
       it 'returns :equal if arguments are equal' do
-	@ar._compare(1, 1).should == :equal
+	@ar._compare(1, 1).equal?.should be_true
       end
 
       it 'returns :less if arg1 < arg2' do
-	@ar._compare(1, 2).should == :less
+	@ar._compare(1, 2).less?.should be_true
       end
 
       it 'returns :greater if arg1 > arg2' do
-	@ar._compare(2, 1).should == :greater
+	@ar._compare(2, 1).greater?.should be_true
       end
     end
 
@@ -191,15 +191,15 @@ describe SortedArrayBinary do
       end
 
       it 'returns :equal if arguments are equal' do
-	@ar._compare(1, 1).should == :equal
+	@ar._compare(1, 1).equal?.should be_true
       end
 
       it 'returns :less if arg1 < arg2' do
-	@ar._compare(2, 1).should == :less
+	@ar._compare(2, 1).less?.should be_true
       end
 
       it 'returns :greater if arg1 > arg2' do
-	@ar._compare(1, 2).should == :greater
+	@ar._compare(1, 2).greater?.should be_true
       end
 
       it 'raises exception if block returns value outside of -1, 0, 1' do
@@ -318,4 +318,35 @@ describe SortedArrayBinary do
     end
   end
   # }}}2
+end
+
+describe SortedArrayBinary::ComparisonState do
+  [nil, -2, 2].each { |state|
+    it "allows only valid state in" do
+      expect {
+	SortedArrayBinary::ComparisonState.new state
+      }.to raise_error ArgumentError
+    end
+  }
+
+  it 'is equal? if state is 0' do
+    state = SortedArrayBinary::ComparisonState.new 0
+    state.equal?.should be_true
+    state.less?.should be_false
+    state.greater?.should be_false
+  end
+
+  it 'is greater? if state is 1' do
+    state = SortedArrayBinary::ComparisonState.new 1
+    state.greater?.should be_true
+    state.equal?.should be_false
+    state.less?.should be_false
+  end
+
+  it 'is less? if state is -1' do
+    state = SortedArrayBinary::ComparisonState.new -1
+    state.less?.should be_true
+    state.equal?.should be_false
+    state.greater?.should be_false
+  end
 end

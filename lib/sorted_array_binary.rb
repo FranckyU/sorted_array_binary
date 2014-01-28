@@ -11,8 +11,28 @@
 #   array = SortedArrayBinary.new { |a, b| b <=> a }
 #   array.push 'a', 'b' #=> ['b', 'a']
 class SortedArrayBinary < Array
-  # Readable names for values returned by <=>.
-  ELEMENT_COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
+  # {{{2 ComparisonState
+  class ComparisonState #:nodoc:
+    def initialize state
+      raise ArgumentError, "invalid state: #{state.inspect}" \
+	unless state && state >= -1 && state <= 1
+
+      @state = state
+    end
+
+    def equal?
+      @state == 0
+    end
+
+    def greater?
+      @state == 1
+    end
+
+    def less?
+      @state == -1
+    end
+  end
+  # }}}2
 
   class InvalidSortBlock < RuntimeError #:nodoc:
   end
@@ -133,10 +153,10 @@ class SortedArrayBinary < Array
   end
 
   def _compare a, b #:nodoc:
-    state = ELEMENT_COMPARE_STATES[@sort_block.call(a, b)]
+    ComparisonState.new(ret = @sort_block.call(a, b))
+  rescue ArgumentError
     raise InvalidSortBlock,
-      "sort block returned invalid value: #{state.inspect}" unless state
-    state
+      "sort block returned invalid value: #{ret.inspect}"
   end
 
   def _find_insert_position element_to_place #:nodoc:
@@ -151,10 +171,10 @@ class SortedArrayBinary < Array
       comparison_state = _compare(element_to_place, middle_el)
 
       # 1. Equals to the middle element. Insert after el.
-      return after_middle_idx if comparison_state == :equal
+      return after_middle_idx if comparison_state.equal?
 
       # 2. Less than the middle element.
-      if comparison_state == :less
+      if comparison_state.less?
 	# There's nothing to the left. So insert it as the first element.
 	return 0 if _left_boundary? middle_idx
 
@@ -170,7 +190,7 @@ class SortedArrayBinary < Array
       # Less than after middle element? Put it right before it!
       after_middle_el = self[after_middle_idx]
       ret = _compare(element_to_place, after_middle_el)
-      return after_middle_idx if ret == :equal || ret == :less
+      return after_middle_idx if ret.equal? || ret.less?
 
       # Proceeed to divide the right part.
       start_idx = after_middle_idx
