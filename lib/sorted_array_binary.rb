@@ -139,7 +139,7 @@ class SortedArrayBinary < Array
     state
   end
 
-  def _find_insert_position arg #:nodoc:
+  def _find_insert_position element_to_place #:nodoc:
     return 0 if empty?
 
     start_idx, end_idx = 0, size - 1
@@ -148,7 +148,7 @@ class SortedArrayBinary < Array
       middle_el = self[middle_idx]
       after_middle_idx = middle_idx + 1
 
-      comparison_state = _compare(arg, middle_el)
+      comparison_state = _compare(element_to_place, middle_el)
 
       # 1. Equals to the middle element. Insert after el.
       return after_middle_idx if comparison_state == :equal
@@ -164,12 +164,12 @@ class SortedArrayBinary < Array
 
       # 3. Greater than the middle element.
       #
-      # Right boundary? Put arg after the last (middle) element.
+      # Right boundary? Put element_to_place after the last (middle) element.
       return after_middle_idx if _right_boundary? middle_idx
 
       # Less than after middle element? Put it right before it!
       after_middle_el = self[after_middle_idx]
-      ret = _compare(arg, after_middle_el)
+      ret = _compare(element_to_place, after_middle_el)
       return after_middle_idx if ret == :equal || ret == :less
 
       # Proceeed to divide the right part.
