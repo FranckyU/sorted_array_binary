@@ -60,8 +60,9 @@ class SortedArrayBinary < Array
     alias_method m, :_not_implemented
   }
 
-  # If the resulting array contains nil, throw an exception. This operation is
-  # atomic, i.e. the array won't be mutated in case of exception.
+  # Same as Array#collect!, but:
+  # * Disallow nils in the resulting array.
+  # * The resulting array is sorted.
   def collect! &b
     ar = collect &b
     self.class._check_for_nil *ar
@@ -69,16 +70,24 @@ class SortedArrayBinary < Array
   end
   alias :map! :collect!
 
+  # Same as Array#concat, but:
+  # * Disallow nils in the resulting array.
+  # * The resulting array is sorted.
   def concat other_ary
     _add *other_ary
   end
 
+  # Same as Array#flatten!, but:
+  # * Disallow nils in the resulting array.
+  # * The resulting array is sorted.
   def flatten! *args
     ar = flatten *args
     self.class._check_for_nil *ar
     replace ar
   end
 
+  # Add objects to array, automatically placing them according to sort order.
+  # Disallow nils.
   def push *objs
     _add *objs
   end
