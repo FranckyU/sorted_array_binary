@@ -143,9 +143,9 @@ class SortedArrayBinary < Array
     return 0 if empty?
 
     # At this point, there must be >1 elements in the array.
-    start, ending = 0, size - 1
+    start_idx, ending_idx = 0, size - 1
     loop {
-      middle_idx = _middle_element_index(start, ending)
+      middle_idx = _middle_element_index(start_idx, ending_idx)
       middle_el = self[middle_idx]
       after_middle_idx = middle_idx + 1
 
@@ -159,7 +159,7 @@ class SortedArrayBinary < Array
 	# There's nothing to the left. So insert it as the first element.
 	return 0 if _left_boundary? middle_idx
 
-	ending = middle_idx
+	ending_idx = middle_idx
 	next
       end
 
@@ -174,7 +174,7 @@ class SortedArrayBinary < Array
       return after_middle_idx if ret == :equal || ret == :less
 
       # Proceeed to divide the right part.
-      start = after_middle_idx
+      start_idx = after_middle_idx
     }
   end
 
