@@ -1,8 +1,6 @@
 class SortedArrayBinary < Array
   ELEMENT_COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
 
-  class BoundaryError < RuntimeError #:nodoc:
-  end
   class InvalidSortBlock < RuntimeError #:nodoc:
   end
 
@@ -116,7 +114,7 @@ class SortedArrayBinary < Array
   end
 
   def _check_can_calc_boundary? #:nodoc:
-    raise BoundaryError, 'no boundary? on empty array' if empty?
+    raise "can't calc boundary on empty array" if empty?
   end
 
   def _compare a, b #:nodoc:

@@ -295,7 +295,7 @@ describe SortedArrayBinary do
       it 'raises exception if array is empty' do
 	expect {
 	  @ar._left_boundary?(0)
-	}.to raise_error SortedArrayBinary::BoundaryError
+	}.to raise_error
       end
     end
 
@@ -313,7 +313,7 @@ describe SortedArrayBinary do
       it 'raises exception if array is empty' do
 	expect {
 	  @ar._right_boundary?(0)
-	}.to raise_error SortedArrayBinary::BoundaryError
+	}.to raise_error
       end
     end
   end
