@@ -46,15 +46,15 @@ class SortedArrayBinary < Array
     super
   end
 
-  def _not_implemented *args #:nodoc:
-    raise NotImplementedError
-  end
-
   # Not implemented methods.
   #
   # The following methods are not implemented mostly because they change order
   # of elements. The rest ([]= and fill) arguably aren't useful on a sorted
   # array.
+  def _not_implemented *args #:nodoc:
+    raise NotImplementedError
+  end
+
   [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!, :sort!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
