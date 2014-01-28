@@ -1,4 +1,6 @@
 class SortedArrayBinary < Array
+  COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
+
   class BoundaryError < RuntimeError #:nodoc:
   end
   class InvalidSortBlock < RuntimeError #:nodoc:
@@ -118,16 +120,10 @@ class SortedArrayBinary < Array
   end
 
   def _compare a, b #:nodoc:
-    case state = @sort_block ? @sort_block.call(a, b) : a <=> b
-    when -1
-      :less
-    when 0
-      :equal
-    when 1
-      :greater
-    else
-      raise InvalidSortBlock, "sort block returned invalid value: #{state}"
-    end
+    state = COMPARE_STATES[@sort_block ? @sort_block.call(a, b) : a <=> b]
+    raise InvalidSortBlock,
+      "sort block returned invalid value: #{state.inspect}" unless state
+    state
   end
 
   def _find_insert_position arg #:nodoc:
