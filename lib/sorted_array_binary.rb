@@ -134,7 +134,7 @@ class SortedArrayBinary < Array
   def replace other_ary
     self.class._check_for_nil *other_ary
     super
-    old_sort!
+    old_sort! &@sort_block
     self
   end
 

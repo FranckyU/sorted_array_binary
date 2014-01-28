@@ -2,6 +2,10 @@ require 'rspec'
 require 'spec_helper'
 require 'sorted_array_binary'
 
+def new_array_with_block
+  SortedArrayBinary.new { |a, b| b <=> a }
+end
+
 # {{{1 SortedArrayBinary
 describe SortedArrayBinary do
   before :each do
@@ -82,17 +86,24 @@ describe SortedArrayBinary do
   # {{{2 #collect!
   [:collect!, :map!].each { |method|
     context "##{method}" do
-      it 'after it, array is sorted' do
-	@ar.push 'a', 'b', 'c'
-	@ar.send(method) { |el|
-	  case el
-	  when 'a' then 9
-	  when 'b' then 3
-	  when 'c' then 1
+      [false, true].each { |sort_block_given|
+	it 'after it, array is sorted' do
+	  @ar = new_array_with_block if sort_block_given
+	  @ar.push 'a', 'b', 'c'
+	  @ar.send(method) { |el|
+	    case el
+	    when 'a' then 9
+	    when 'b' then 3
+	    when 'c' then 1
+	    end
+	  }
+	  if sort_block_given
+	    @ar.should == [9, 3, 1]
+	  else
+	    @ar.should == [1, 3, 9]
 	  end
-	}
-	@ar.should == [1, 3, 9]
-      end
+	end
+      }
 
       it 'raises exception if one of resulting elements is nil' do
 	@ar.push 'a'
@@ -103,19 +114,35 @@ describe SortedArrayBinary do
   }
 
   # {{{2 #concat
-  it '#concat adds another array and everything is sorted' do
-    @ar.push 'c'
-    @ar.concat ['a', 'b']
-    @ar.should == ['a', 'b', 'c']
+  context '#concat' do
+    [false, true].each { |sort_block_given|
+      it '#concat adds another array and everything is sorted' do
+	@ar = new_array_with_block if sort_block_given
+	@ar.push 'c'
+	@ar.concat ['a', 'b']
+	if sort_block_given
+	  @ar.should == ['c', 'b', 'a']
+	else
+	  @ar.should == ['a', 'b', 'c']
+	end
+      end
+    }
   end
 
   # {{{2 #flatten!
   context '#flatten!' do
-    it 'flattens array' do
-      @ar.push [1, 2], [4, 3]
-      @ar.flatten!
-      @ar.should == [1, 2, 3, 4]
-    end
+    [false, true].each { |sort_block_given|
+      it 'flattens array and the result is sorted' do
+	@ar = new_array_with_block if sort_block_given
+	@ar.push [1, 2], [4, 3]
+	@ar.flatten!
+	if sort_block_given
+	  @ar.should == [4, 3, 2, 1]
+	else
+	  @ar.should == [1, 2, 3, 4]
+	end
+      end
+    }
 
     it 'raises exception if resulting array contains nil' do
       @ar.push [nil, 1]
@@ -159,11 +186,18 @@ describe SortedArrayBinary do
 
   # {{{2 #replace
   context '#replace' do
-    it '#replace replaces array, the resulting array is sorted' do
-      @ar.push 'a'
-      @ar.replace ['c', 'b']
-      @ar.should == ['b', 'c']
-    end
+    [false, true].each { |sort_block_given|
+      it '#replace replaces array, the resulting array is sorted' do
+	@ar = new_array_with_block if sort_block_given
+	@ar.push 'a'
+	@ar.replace ['c', 'b']
+	if sort_block_given
+	  @ar.should == ['c', 'b']
+	else
+	  @ar.should == ['b', 'c']
+	end
+      end
+    }
 
     it "doesn't allow nils" do
       expect { @ar.replace [nil] }.to raise_error ArgumentError
