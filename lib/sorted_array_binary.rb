@@ -1,4 +1,5 @@
 class SortedArrayBinary < Array
+  # Readable names for values returned by <=>.
   ELEMENT_COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
 
   class InvalidSortBlock < RuntimeError #:nodoc:
