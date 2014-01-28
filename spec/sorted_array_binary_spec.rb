@@ -2,6 +2,7 @@ require 'rspec'
 require 'spec_helper'
 require 'sorted_array_binary'
 
+# {{{1 SortedArrayBinary
 describe SortedArrayBinary do
   before :each do
     @ar = SortedArrayBinary.new
@@ -320,6 +321,7 @@ describe SortedArrayBinary do
   # }}}2
 end
 
+# {{{1 ComparisonState
 describe SortedArrayBinary::ComparisonState do
   [nil, -2, 2].each { |state|
     it "allows only valid state in" do
