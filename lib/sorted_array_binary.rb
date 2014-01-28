@@ -1,3 +1,15 @@
+# Automatically sorted array (by using binary search).
+#
+# = Example
+#   require 'sorted_array_binary'
+#
+#   # Use standard sorting via <=>.
+#   array = SortedArrayBinary.new
+#   array.push 'b', 'a' #=> ['a', 'b']
+#
+#   # Use custom sorting block.
+#   array = SortedArrayBinary.new { |a, b| b <=> a }
+#   array.push 'a', 'b' #=> ['b', 'a']
 class SortedArrayBinary < Array
   # Readable names for values returned by <=>.
   ELEMENT_COMPARE_STATES = { -1 => :less, 0 => :equal, 1 => :greater }
