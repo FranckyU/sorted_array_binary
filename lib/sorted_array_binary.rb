@@ -94,6 +94,7 @@ class SortedArrayBinary < Array
   alias :<< :push
 
   def replace other_ary
+    self.class._check_for_nil *other_ary
     super
     old_sort!
     self

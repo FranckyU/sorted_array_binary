@@ -157,10 +157,16 @@ describe SortedArrayBinary do
   }
 
   # {{{2 #replace
-  it '#replace replaces array, the resulting array is sorted' do
-    @ar.push 'a'
-    @ar.replace ['c', 'b']
-    @ar.should == ['b', 'c']
+  context '#replace' do
+    it '#replace replaces array, the resulting array is sorted' do
+      @ar.push 'a'
+      @ar.replace ['c', 'b']
+      @ar.should == ['b', 'c']
+    end
+
+    it "doesn't allow nils" do
+      expect { @ar.replace [nil] }.to raise_error ArgumentError
+    end
   end
 
   # {{{2 #_compare
