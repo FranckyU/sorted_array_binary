@@ -12,7 +12,7 @@ def measure sorted_array_name, sorted_array_instance
       sorted_array_instance.push el
     }
   }
-  say "#{sorted_array_name}#push", sec
+  say sorted_array_name, sec
 end
 
 measure 'sorted_array',
