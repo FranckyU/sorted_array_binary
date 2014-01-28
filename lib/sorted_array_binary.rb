@@ -9,6 +9,7 @@ class SortedArrayBinary < Array
   alias :old_insert :insert
   private :old_insert
   alias :old_sort! :sort!
+  private :old_sort!
 
   def initialize *args, &b
     # Passed sort block.
