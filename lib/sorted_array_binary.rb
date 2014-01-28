@@ -5,7 +5,8 @@ class SortedArrayBinary < Array
   end
 
   def self._check_for_nil *objs #:nodoc:
-    raise ArgumentError, "nil can't be sorted" if objs.include?(nil)
+    raise ArgumentError, "nils aren't allowed into sorted array" \
+      if objs.include?(nil)
   end
 
   alias :old_insert :insert
