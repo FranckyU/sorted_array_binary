@@ -6,48 +6,38 @@ class SortedArrayBinary < Array
     raise ArgumentError, "nil can't be sorted" if objs.include?(nil)
   end
 
-  def self.new *args, &b
-    case args.size
-    when 0
-      # Passed sort block.
-      return super &b
-    when 2
-      # Passed size, obj.
-      return super *args
-    when 1
-      # Passed array.
-      if args.first.respond_to? :each
-	_check_for_nil *args.first
-	ar = super *args
-	ar.old_sort!
-	return ar
-      end
-
-      # Passed size and block.
-      if block_given?
-	ar = super *args, b
-	_check_for_nil *ar
-	ar.old_sort!
-	return ar
-      end
-
-      # Passed size, but not obj, which means fill with nils.
-      raise ArgumentError, "can't fill array with nils" \
-	if args.first.is_a? Numeric
-    end
-
-    super *args, &b
-  end
-
   alias :old_insert :insert
   private :old_insert
   alias :old_sort! :sort!
 
   def initialize *args, &b
+    # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
       super()
       return
+    end
+
+    if args.size == 1
+      # Passed array.
+      if args.first.respond_to? :each
+	self.class._check_for_nil *args.first
+	super *args
+	old_sort!
+	return
+      end
+
+      # Passed size and block.
+      if block_given?
+	super *args, &b
+	self.class._check_for_nil *self
+	old_sort!
+	return
+      end
+
+      # Passed size, but not obj, which means fill with nils.
+      raise ArgumentError, "can't fill array with nils" \
+	if args.first.is_a? Numeric
     end
 
     super
