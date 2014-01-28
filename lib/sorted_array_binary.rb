@@ -78,13 +78,12 @@ class SortedArrayBinary < Array
   # * Disallow nils in the resulting array.
   # * The resulting array is sorted.
   def collect! &b
-    ar = collect &b
-    replace ar
+    replace(collect &b)
   end
   alias :map! :collect!
 
   # Same as Array#concat, but:
-  # * Disallow nils in the resulting array.
+  # * Disallow nils in the passed array.
   # * The resulting array is sorted.
   def concat other_ary
     _add *other_ary
@@ -94,8 +93,7 @@ class SortedArrayBinary < Array
   # * Disallow nils in the resulting array.
   # * The resulting array is sorted.
   def flatten! *args
-    ar = flatten *args
-    replace ar
+    replace(flatten *args)
   end
 
   # Add objects to array, automatically placing them according to sort order.
@@ -106,7 +104,7 @@ class SortedArrayBinary < Array
   alias :<< :push
 
   # Same as Array#replace, but:
-  # * Disallow nils in the passed.
+  # * Disallow nils in @other_ary.
   # * The resulting array is sorted.
   def replace other_ary
     self.class._check_for_nil *other_ary
@@ -116,6 +114,9 @@ class SortedArrayBinary < Array
   end
 
   #private
+  # Name the following methods starting with underscore so as not to pollute
+  # Array namespace. They are considered private, but for testing purposes are
+  # left public.
 
   def _add *objs #:nodoc:
     self.class._check_for_nil *objs
