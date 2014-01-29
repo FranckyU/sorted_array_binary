@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+
+require '../lib/sorted_array_binary'
+
+@ar = []
+COUNT = 10000
+COUNT.times {
+  @ar << rand(COUNT)
+}
+
+sorted_array = SortedArrayBinary.new
+@ar.each { |el| sorted_array.push el }
