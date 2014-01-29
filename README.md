@@ -43,3 +43,9 @@ sorted_array        (0.0.5)     1.179088
 array-sorted        (1.1.2)     0.076348
 sorted_array_binary (0.0.1)     0.015969
 ```
+
+## Installation
+
+```
+gem install sorted_array_binary
+```
