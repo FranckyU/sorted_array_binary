@@ -75,7 +75,7 @@ describe SortedArrayBinary do
       expect { @ar.fill nil }.to raise_error NotImplementedError
     end
 
-    [:insert, :reverse!, :rotate!, :shuffle!, :unshift].
+    [:insert, :reverse!, :rotate!, :shuffle!].
     each { |m|
       it "##{m}" do
 	expect { @ar.send m }.to raise_error NotImplementedError
@@ -152,7 +152,7 @@ describe SortedArrayBinary do
   end
 
   # {{{2 #push
-  [:<<, :push].each { |method|
+  [:<<, :push, :unshift].each { |method|
     context "##{method}" do
       it 'adds an element to array' do
 	@ar.send method, 'a'

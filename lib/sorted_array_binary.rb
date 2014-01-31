@@ -70,7 +70,7 @@ class SortedArrayBinary < Array
     raise NotImplementedError
   end
 
-  [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!, :unshift].
+  [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!].
   each { |m|
     alias_method m, :_not_implemented
   }
@@ -103,6 +103,7 @@ class SortedArrayBinary < Array
     _add *objs
   end
   alias :<< :push
+  alias :unshift :push
 
   # Same as Array#replace, but:
   # * Disallow nils in @other_ary.
