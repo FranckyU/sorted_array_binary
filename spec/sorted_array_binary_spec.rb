@@ -12,21 +12,6 @@ describe SortedArrayBinary do
     @ar = SortedArrayBinary.new
   end
 
-  # {{{2 self._check_for_nil
-  context 'self._check_for_nil' do
-    it "raises exception if there's nil in passed objs" do
-      expect {
-	SortedArrayBinary._check_for_nil 'a', nil
-      }.to raise_error ArgumentError
-    end
-
-    it "doesn't raise exception if there's no nil in passed objs" do
-      expect {
-	SortedArrayBinary._check_for_nil 'a', 'b'
-      }.not_to raise_error
-    end
-  end
-
   # {{{2 self.new
   context 'self.new' do
     it 'if passed size and obj, fills it' do
@@ -34,23 +19,13 @@ describe SortedArrayBinary do
       @ar.should == ['a']*5
     end
 
-    it 'if passed just size, raises exception' do
-      expect { SortedArrayBinary.new 5 }.to raise_error ArgumentError
-    end
-
     it 'if passed single non-numeric argument, calls Array#new' do
       expect { SortedArrayBinary.new 'a' }.to raise_error TypeError
     end
 
-    context 'if passed array,' do
-      it 'sorts it' do
-	@ar = SortedArrayBinary.new ['b', 'a']
-	@ar.should == ['a', 'b']
-      end
-
-      it 'raises exception if nil found in passed array' do
-	expect { SortedArrayBinary.new [nil] }.to raise_error ArgumentError
-      end
+    it 'if passed array, it sorts it' do
+      @ar = SortedArrayBinary.new ['b', 'a']
+      @ar.should == ['a', 'b']
     end
 
     it 'if passed size and block, fills it and sorts it' do
@@ -104,12 +79,6 @@ describe SortedArrayBinary do
 	  end
 	end
       }
-
-      it 'raises exception if one of resulting elements is nil' do
-	@ar.push 'a'
-	expect { @ar.send(method) { nil } }.to raise_error ArgumentError
-	@ar.should == ['a']
-      end
     end
   }
 
@@ -143,12 +112,6 @@ describe SortedArrayBinary do
 	end
       end
     }
-
-    it 'raises exception if resulting array contains nil' do
-      @ar.push [nil, 1]
-      expect { @ar.flatten! }.to raise_error ArgumentError
-      @ar.should == [[nil, 1]]
-    end
   end
 
   # {{{2 #push
@@ -177,10 +140,6 @@ describe SortedArrayBinary do
 	@ar.push 'a', 'b'
 	@ar.should == ['d', 'c', 'b', 'a']
       end
-
-      it 'raises exception if nil is passed' do
-	expect { @ar.send method, nil }.to raise_error ArgumentError
-      end
     end
   }
 
@@ -198,10 +157,6 @@ describe SortedArrayBinary do
 	end
       end
     }
-
-    it "doesn't allow nils" do
-      expect { @ar.replace [nil] }.to raise_error ArgumentError
-    end
   end
 
   # {{{2 #_find_insert_position

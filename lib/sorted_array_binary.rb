@@ -16,11 +16,6 @@ require 'bsearch'
 #   array = SortedArrayBinary.new { |a, b| b <=> a }
 #   array.push 'a', 'b' #=> ['b', 'a']
 class SortedArrayBinary < Array
-  def self._check_for_nil *objs #:nodoc:
-    raise ArgumentError, "nils aren't allowed into sorted array" \
-      if objs.include?(nil)
-  end
-
   alias :old_insert :insert
   private :old_insert
   alias :old_sort! :sort!
@@ -39,7 +34,6 @@ class SortedArrayBinary < Array
     if args.size == 1
       # Passed initial array.
       if args.first.respond_to? :each
-	self.class._check_for_nil *args.first
 	super *args
 	old_sort!
 	return
@@ -48,14 +42,9 @@ class SortedArrayBinary < Array
       # Passed size and block.
       if block_given?
 	super *args, &b
-	self.class._check_for_nil *self
 	old_sort!
 	return
       end
-
-      # Passed size, but not obj, which means fill with nils.
-      raise ArgumentError, "can't fill array with nils" \
-	if args.first.is_a? Numeric
     end
 
     super
@@ -75,41 +64,28 @@ class SortedArrayBinary < Array
     alias_method m, :_not_implemented
   }
 
-  # Same as Array#collect!, but:
-  # * Disallow nils in the resulting array.
-  # * The resulting array is sorted.
-  def collect! &b
+  def collect! &b #:nodoc:
     replace(collect &b)
   end
   alias :map! :collect!
 
-  # Same as Array#concat, but:
-  # * Disallow nils in the passed array.
-  # * The resulting array is sorted.
-  def concat other_ary
+  def concat other_ary #:nodoc:
     _add *other_ary
   end
 
-  # Same as Array#flatten!, but:
-  # * Disallow nils in the resulting array.
-  # * The resulting array is sorted.
-  def flatten! *args
+  def flatten! *args #:nodoc:
     replace(flatten *args)
   end
 
-  # Add objects to array, automatically placing them according to sort order.
-  # Disallow nils.
+  # Add objects to array, automatically placing them according to sort order
+  # (via <=> by default).
   def push *objs
     _add *objs
   end
   alias :<< :push
   alias :unshift :push
 
-  # Same as Array#replace, but:
-  # * Disallow nils in @other_ary.
-  # * The resulting array is sorted.
-  def replace other_ary
-    self.class._check_for_nil *other_ary
+  def replace other_ary #:nodoc:
     super
     old_sort! &@sort_block
     self
@@ -124,7 +100,6 @@ class SortedArrayBinary < Array
   # left public.
 
   def _add *objs #:nodoc:
-    self.class._check_for_nil *objs
     objs.each { |obj|
       old_insert _find_insert_position(obj), obj
     }
