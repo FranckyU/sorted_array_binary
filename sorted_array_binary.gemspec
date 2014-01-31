@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'sorted_array_binary'
-  s.version     = '0.0.2'
-  s.date        = '2014-01-29'
+  s.version     = '0.0.3'
+  s.date        = '2014-01-31'
   s.summary     = 'Sorted array'
   s.description = 'Sorted array using binary search'
   s.authors     = ['Dmitry Maksyoma']
