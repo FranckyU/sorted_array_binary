@@ -1,5 +1,7 @@
 # Copyright (C) 2014 by Dmitry Maksyoma <ledestin@gmail.com>
 
+require 'bsearch'
+
 # Automatically sorted array (by using binary search). Nils aren't allowed.
 # Methods that reorder elements are not implemented, as well as #[]= and #fill.
 #
@@ -14,32 +16,6 @@
 #   array = SortedArrayBinary.new { |a, b| b <=> a }
 #   array.push 'a', 'b' #=> ['b', 'a']
 class SortedArrayBinary < Array
-  # {{{2 ComparisonState
-  class ComparisonState #:nodoc:
-    def initialize state
-      raise ArgumentError, "invalid state: #{state.inspect}" \
-	unless state && state >= -1 && state <= 1
-
-      @state = state
-    end
-
-    def equal?
-      @state == 0
-    end
-
-    def greater?
-      @state == 1
-    end
-
-    def less?
-      @state == -1
-    end
-  end
-  # }}}2
-
-  class InvalidSortBlock < RuntimeError #:nodoc:
-  end
-
   def self._check_for_nil *objs #:nodoc:
     raise ArgumentError, "nils aren't allowed into sorted array" \
       if objs.include?(nil)
@@ -151,66 +127,7 @@ class SortedArrayBinary < Array
     self
   end
 
-  def _check_can_calc_boundary? #:nodoc:
-    raise "can't calc boundary on empty array" if empty?
-  end
-
-  def _compare a, b #:nodoc:
-    ComparisonState.new(ret = @sort_block.call(a, b))
-  rescue ArgumentError
-    raise InvalidSortBlock,
-      "sort block returned invalid value: #{ret.inspect}"
-  end
-
   def _find_insert_position element_to_place #:nodoc:
-    return 0 if empty?
-
-    start_idx, end_idx = 0, size - 1
-    loop {
-      middle_idx = _middle_element_index(start_idx, end_idx)
-      middle_el = self[middle_idx]
-      after_middle_idx = middle_idx + 1
-
-      comparison_state = _compare(element_to_place, middle_el)
-
-      # 1. Equals to the middle element. Insert after el.
-      return after_middle_idx if comparison_state.equal?
-
-      # 2. Less than the middle element.
-      if comparison_state.less?
-	# There's nothing to the left. So insert it as the first element.
-	return 0 if _left_boundary? middle_idx
-
-	end_idx = middle_idx - 1
-	next
-      end
-
-      # 3. Greater than the middle element.
-      #
-      # Right boundary? Put element_to_place after the last (middle) element.
-      return after_middle_idx if _right_boundary? middle_idx
-
-      # Less than after middle element? Put it right before it!
-      after_middle_el = self[after_middle_idx]
-      ret = _compare(element_to_place, after_middle_el)
-      return after_middle_idx if ret.equal? || ret.less?
-
-      # Proceeed to divide the right part.
-      start_idx = after_middle_idx
-    }
-  end
-
-  def _left_boundary? idx #:nodoc:
-    _check_can_calc_boundary?
-    idx == 0
-  end
-
-  def _middle_element_index start, ending #:nodoc:
-    start + (ending - start)/2
-  end
-
-  def _right_boundary? idx #:nodoc:
-    _check_can_calc_boundary?
-    idx == size - 1
+    bsearch_upper_boundary { |el| @sort_block.call el, element_to_place }
   end
 end
