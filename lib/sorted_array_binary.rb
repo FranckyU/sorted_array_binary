@@ -70,7 +70,7 @@ class SortedArrayBinary < Array
     raise NotImplementedError
   end
 
-  [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!, :sort!, :unshift].
+  [:[]=, :fill, :insert, :reverse!, :rotate!, :shuffle!, :unshift].
   each { |m|
     alias_method m, :_not_implemented
   }
@@ -112,6 +112,9 @@ class SortedArrayBinary < Array
     super
     old_sort! &@sort_block
     self
+  end
+
+  def sort! #:nodoc:
   end
 
   #private

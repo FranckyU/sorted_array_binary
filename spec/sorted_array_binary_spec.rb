@@ -75,7 +75,7 @@ describe SortedArrayBinary do
       expect { @ar.fill nil }.to raise_error NotImplementedError
     end
 
-    [:insert, :reverse!, :rotate!, :shuffle!, :sort!, :unshift].
+    [:insert, :reverse!, :rotate!, :shuffle!, :unshift].
     each { |m|
       it "##{m}" do
 	expect { @ar.send m }.to raise_error NotImplementedError
