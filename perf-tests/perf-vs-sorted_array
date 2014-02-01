@@ -15,6 +15,7 @@ def measure sorted_array_name, sorted_array_instance
   say sorted_array_name, sec
 end
 
+@ar = make_array_with_random_numbers 1000
 measure 'sorted_array',
   SortedArray::SortedArray.new(SortedArray::DefaultSorter.new(:to_i))
 measure 'array-sorted', Array::Sorted.new
