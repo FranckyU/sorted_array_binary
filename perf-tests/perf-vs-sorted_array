@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-require 'frugal_timeout'
+require 'monotonic_time'
 require 'sorted_array'
 require 'array-sorted'
 require './common'

@@ -1,7 +1,3 @@
-require 'frugal_timeout'
-
-MonotonicTime = FrugalTimeout::MonotonicTime
-
 def say msg, sec
   printf "%-24s %f\n", msg, sec
 end
