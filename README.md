@@ -46,6 +46,12 @@ sorted_array_binary (0.0.3)     0.005244
 
 ## Installation
 
+Add to your Gemfile
 ```
-gem install sorted_array_binary
+gem 'sorted_array_binary', github: 'FranckyU/sorted_array_binary', ref: "fa3ffb257dc5c1bb219a18887526afe985d3ec00"
 ```
+
+## 2020 updates
+
++ Old syntax updates -> enforcing parenthesises around inner method calls (Elixir I miss your pipes!)
++ Quieting 2.7 related warning around `SortedArrayBinary#initialize` `super()` when a block is passed.
