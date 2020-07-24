@@ -13,5 +13,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec', '>= 2.13'
   s.add_development_dependency 'monotonic_time', '~> 0.0'
-  s.add_runtime_dependency 'bsearch', '~> 1.5'
+  # s.add_runtime_dependency 'bsearch', '~> 1.5'
+  s.add_runtime_dependency 'bsearch20', '~> 1.6'
 end
