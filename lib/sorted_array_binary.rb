@@ -27,7 +27,7 @@ class SortedArrayBinary < Array
     # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
-      super
+      super(*args, &b)
       return
     end
 
