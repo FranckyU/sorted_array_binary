@@ -48,7 +48,7 @@ sorted_array_binary (0.0.3)     0.005244
 
 Add to your Gemfile
 ```
-gem 'sorted_array_binary', github: 'FranckyU/sorted_array_binary', ref: "fa3ffb257dc5c1bb219a18887526afe985d3ec00"
+gem 'sorted_array_binary', github: 'FranckyU/sorted_array_binary', ref: "6a8dd894e379d4d4cbb674aa8ce45feb5a6d2315"
 ```
 
 ## 2020 updates
