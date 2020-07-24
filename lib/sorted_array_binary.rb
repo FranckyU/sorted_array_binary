@@ -27,21 +27,21 @@ class SortedArrayBinary < Array
     # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
-      super()
+      super
       return
     end
 
     if args.size == 1
       # Passed initial array.
       if args.first.respond_to? :each
-	super *args
+	super(*args)
 	old_sort!
 	return
       end
 
       # Passed size and block.
       if block_given?
-	super *args, &b
+	super(*args, &b)
 	old_sort!
 	return
       end
@@ -70,7 +70,7 @@ class SortedArrayBinary < Array
   alias :map! :collect!
 
   def concat other_ary #:nodoc:
-    _add *other_ary
+    _add(*other_ary)
   end
 
   def flatten! *args #:nodoc:
@@ -80,14 +80,14 @@ class SortedArrayBinary < Array
   # Add objects to array, automatically placing them according to sort order
   # (via <=> by default).
   def push *objs
-    _add *objs
+    _add(*objs)
   end
   alias :<< :push
   alias :unshift :push
 
   def replace other_ary #:nodoc:
     super
-    old_sort! &@sort_block
+    old_sort!(&@sort_block)
     self
   end
 
