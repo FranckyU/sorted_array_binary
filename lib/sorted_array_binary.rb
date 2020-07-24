@@ -22,12 +22,12 @@ class SortedArrayBinary < Array
   private :old_sort!
 
   def initialize *args, &b
-    @sort_block = proc { |a, b| a <=> b }
+    @sort_block = Proc.new { |one, another| one <=> another }
 
     # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
-      super
+      super(&b)
       return
     end
 
