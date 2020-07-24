@@ -64,8 +64,8 @@ class SortedArrayBinary < Array
     alias_method m, :_not_implemented
   }
 
-  def collect! &b #:nodoc:
-    replace(collect &b)
+  def collect!(&b) #:nodoc:
+    replace(collect(&b))
   end
   alias :map! :collect!
 
@@ -74,7 +74,7 @@ class SortedArrayBinary < Array
   end
 
   def flatten! *args #:nodoc:
-    replace(flatten *args)
+    replace(flatten(*args))
   end
 
   # Add objects to array, automatically placing them according to sort order
