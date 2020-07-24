@@ -27,23 +27,23 @@ class SortedArrayBinary < Array
     # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
-      super(*args, &b)
+      super
       return
     end
 
     if args.size == 1
       # Passed initial array.
       if args.first.respond_to? :each
-	super(*args)
-	old_sort!
-	return
+	      super(*args)
+	      old_sort!
+	      return
       end
 
       # Passed size and block.
       if block_given?
-	super(*args, &b)
-	old_sort!
-	return
+    	  super(*args, &b)
+    	  old_sort!
+    	  return
       end
     end
 
