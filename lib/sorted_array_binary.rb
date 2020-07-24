@@ -1,6 +1,7 @@
 # Copyright (C) 2014 by Dmitry Maksyoma <ledestin@gmail.com>
 
 require 'bsearch20'
+require_relative 'extensions/kernel'
 
 # Automatically sorted array (by using binary search). Nils aren't allowed.
 # Methods that reorder elements are not implemented, as well as #[]= and #fill.
@@ -27,7 +28,9 @@ class SortedArrayBinary < Array
     # Passed sort block.
     if args.size == 0 && block_given?
       @sort_block = b
-      super(&b)
+      silence_warnings do
+        super()
+      end
       return
     end
 
